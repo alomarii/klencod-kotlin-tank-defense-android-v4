@@ -1,0 +1,28 @@
+pluginManagement {
+    // يختار نسخة Android Gradle Plugin المناسبة تلقائيًا لنسخة Gradle التي تشغّل البناء
+    def agp = '8.7.3'
+    try {
+        def p = org.gradle.util.GradleVersion.current().version.split('\\.')
+        def ma = p[0].replaceAll('[^0-9].*', '').toInteger()
+        def mi = p.length > 1 ? p[1].replaceAll('[^0-9].*', '').toInteger() : 0
+        if (ma > 9 || (ma == 9 && mi >= 1)) agp = '9.0.0'
+        else if (ma == 9 || (ma == 8 && mi >= 13)) agp = '8.13.0'
+        else if (ma == 8 && mi >= 9) agp = '8.7.3'
+        else agp = '8.5.2'
+    } catch (Throwable ignored) { }
+    plugins { id 'com.android.application' version agp }
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = 'TankDefense'
+include ':app'
